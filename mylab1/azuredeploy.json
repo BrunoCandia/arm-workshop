@@ -1,16 +1,23 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "storageAccount": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the storage account"
+            }
+        }
+    },
     "functions": [],
     "variables": {},
     "resources": [
         {
-            "name": "storageaccountaz203",
+            "name": "[parameters('storageAccount')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
             "tags": {
-                "displayName": "storageaccountaz203"
+                "displayName": "[parameters('storageAccount')]"
             },
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
