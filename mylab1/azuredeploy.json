@@ -19,7 +19,7 @@
     },
     "functions": [],
     "variables": {
-        "storageAccount": "[toLower(concat(parameters('prefixStorageAccount'), uniqueString(resourceGroup().id)))]"
+        "prefixStorageAccount": "[toLower(concat(parameters('prefixStorageAccount'), uniqueString(resourceGroup().id)))]"
     },
     "resources": [
         {
@@ -37,11 +37,11 @@
             }
         },
         {
-            "name": "[variables('storageAccount')]",
+            "name": "[variables('prefixStorageAccount')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
             "tags": {
-                "displayName": "[variables('storageAccount')]"
+                "displayName": "[variables('prefixStorageAccount')]"
             },
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
@@ -51,5 +51,14 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "prefixStorageAccount": {
+            "type": "string",
+            "value": "[variables('prefixStorageAccount')]"
+        },
+        "storageAccount": {
+            "type": "string",
+            "value": "[parameters('storageAccount')]"
+        }
+    }
 }   
