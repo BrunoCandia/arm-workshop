@@ -7,10 +7,20 @@
             "metadata": {
                 "description": "Name for the storage account"
             }
+        },
+        "prefixStorageAccount": {
+            "type": "string",
+            "defaultValue": "bruno",
+            "maxLength": 11,
+            "metadata": {
+                "description": "Prefix for the storage account Name"
+            }
         }
     },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "storageAccount": "[toLower(concat(parameters('prefixStorageAccount'), uniqueString(resourceGroup().id)))]"
+    },
     "resources": [
         {
             "name": "[parameters('storageAccount')]",
@@ -18,6 +28,20 @@
             "apiVersion": "2019-06-01",
             "tags": {
                 "displayName": "[parameters('storageAccount')]"
+            },
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            }
+        },
+        {
+            "name": "[variables('storageAccount')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "tags": {
+                "displayName": "[variables('storageAccount')]"
             },
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
